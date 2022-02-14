@@ -1,4 +1,5 @@
 music/*
 !music/.gitkeep
 dist/*
-env
+env/*
+build/*
