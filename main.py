@@ -21,17 +21,15 @@ volume_up_button = QPushButton('Volume up')
 volume_down_button = QPushButton('Volume down')
 player = QMediaPlayer()
 
+layout.addWidget(shuffle_button)
 layout.addWidget(play_button)
 layout.addWidget(volume_up_button)
 layout.addWidget(volume_down_button)
 layout.addWidget(pause_button)
 window.setLayout(layout)
 
-# palette = QPalette()
-# palette.setColor(QPalette.ButtonText, Qt.red)
-# app.setPalette(palette)
-title_of_song = QLabel()
 
+title_of_song = QLabel()
 
 
 def VolumeUp():
@@ -59,11 +57,16 @@ def ShufflePlayAudio():
     player.play()
 
 
+def PlayAudio():
+    player.play()
+
+
 def PauseAudio():
     player.pause()
 
 
 shuffle_button.clicked.connect(ShufflePlayAudio)
+play_button.clicked.connect(PlayAudio)
 pause_button.clicked.connect(PauseAudio)
 volume_up_button.clicked.connect(VolumeUp)
 volume_down_button.clicked.connect(VolumeDown)
