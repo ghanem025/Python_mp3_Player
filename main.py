@@ -13,21 +13,31 @@ app = QApplication([])
 app = change_style(app)
 
 window = QWidget()
+window.setFixedHeight(300)
+window.setFixedWidth(300)
+
 layout = QVBoxLayout()
+
+Search_box = QLineEdit()
+Search_box.move(20, 20)
+Search_box.resize(280, 40)
+
 shuffle_button = QPushButton('Shuffle Play')
 play_button = QPushButton('Play')
 pause_button = QPushButton('Pause')
 volume_up_button = QPushButton('Volume up')
 volume_down_button = QPushButton('Volume down')
+
 player = QMediaPlayer()
 
+layout.addWidget(Search_box)
 layout.addWidget(shuffle_button)
 layout.addWidget(play_button)
 layout.addWidget(volume_up_button)
 layout.addWidget(volume_down_button)
 layout.addWidget(pause_button)
-window.setLayout(layout)
 
+window.setLayout(layout)
 
 title_of_song = QLabel()
 
@@ -63,6 +73,10 @@ def PlayAudio():
 
 def PauseAudio():
     player.pause()
+
+
+def SearchSong():
+    print("searching")
 
 
 shuffle_button.clicked.connect(ShufflePlayAudio)
