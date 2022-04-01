@@ -9,89 +9,90 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPalette, QColor
 from darkstyle import change_style
 
+class Utils:
+    def __init__(self):
+        pass
 
-def main():
-    app = QApplication([])
-    app = change_style(app)
+    def VolumeUp(self, player):
+        current_volume = player.volume()
+        player.setVolume(current_volume + 5)
 
-    window = QWidget()
-    window.setFixedHeight(300)
-    window.setFixedWidth(300)
+    def VolumeDown(self, player):
+        current_volume = player.volume()
+        player.setVolume(current_volume - 5)
+        print(current_volume)
 
-    layout = QVBoxLayout()
+    def ShufflePlayAudio(self, player):
+        print("Playing random song")
+        folder = Path.cwd() / 'music'
+        songs = []
+        for song in folder.iterdir():
+            songs.append(song)
+        file = random.choice(songs)
+        print(songs)
+        url = QUrl.fromLocalFile(str(file))
+        content = QMediaContent(url)
+        player.setMedia(content)
+        player.play()
 
-    search_box = QLineEdit()
-    search_box.move(20, 20)
-    search_box.resize(280, 40)
+    def PlayAudio(self, player):
+        player.play()
 
-    shuffle_button = QPushButton('Shuffle Play')
-    play_button = QPushButton('Play')
-    pause_button = QPushButton('Pause')
-    volume_up_button = QPushButton('Volume up')
-    volume_down_button = QPushButton('Volume down')
+    def PauseAudio(self, player):
+        player.pause()
 
-    player = QMediaPlayer()
+    def SearchSong():
+        print("searching")
 
-    layout.addWidget(search_box)
-    layout.addWidget(shuffle_button)
-    layout.addWidget(play_button)
-    layout.addWidget(volume_up_button)
-    layout.addWidget(volume_down_button)
-    layout.addWidget(pause_button)
+class CreateApp:
+    def __init__(self):
+        pass
 
-    window.setLayout(layout)
+    def main(self):
+        app = QApplication([])
+        app = change_style(app)
 
-    title_of_song = QLabel()
+        window = QWidget()
+        window.setFixedHeight(300)
+        window.setFixedWidth(300)
 
-    shuffle_button.clicked.connect(ShufflePlayAudio)
-    play_button.clicked.connect(PlayAudio)
-    pause_button.clicked.connect(PauseAudio)
-    volume_up_button.clicked.connect(VolumeUp)
-    volume_down_button.clicked.connect(VolumeDown)
-    play_button.show()
-    window.show()
-    app.exec()
+        layout = QVBoxLayout()
 
+        search_box = QLineEdit()
+        search_box.move(20, 20)
+        search_box.resize(280, 40)
+
+        shuffle_button = QPushButton('Shuffle Play')
+        play_button = QPushButton('Play')
+        pause_button = QPushButton('Pause')
+        volume_up_button = QPushButton('Volume up')
+        volume_down_button = QPushButton('Volume down')
+
+        player = QMediaPlayer()
+
+        layout.addWidget(search_box)
+        layout.addWidget(shuffle_button)
+        layout.addWidget(play_button)
+        layout.addWidget(volume_up_button)
+        layout.addWidget(volume_down_button)
+        layout.addWidget(pause_button)
+
+        window.setLayout(layout)
+
+        title_of_song = QLabel()
+        utils = Utils
+
+        shuffle_button.clicked.connect(utils.ShufflePlayAudio(self, player))
+        play_button.clicked.connect(utils.PlayAudio(self, player))
+        pause_button.clicked.connect(utils.PauseAudio(self, player))
+        volume_up_button.clicked.connect(utils.VolumeUp(self,player))
+        volume_down_button.clicked.connect(utils.VolumeDown(self, player))
+        play_button.show()
+        window.show()
+        app.exec()
 
 if __name__ == "__main__":
-    main()
-
-
-def VolumeUp(player):
-    current_volume = player.volume()
-    player.setVolume(current_volume + 5)
-
-
-def VolumeDown(player):
-    current_volume = player.volume()
-    player.setVolume(current_volume - 5)
-    print(current_volume)
-
-
-def ShufflePlayAudio(player):
-    print("Playing random song")
-    folder = Path.cwd() / 'music'
-    songs = []
-    for song in folder.iterdir():
-        songs.append(song)
-    file = random.choice(songs)
-    print(songs)
-    url = QUrl.fromLocalFile(str(file))
-    content = QMediaContent(url)
-    player.setMedia(content)
-    player.play()
-
-
-def PlayAudio(player):
-    player.play()
-
-
-def PauseAudio(player):
-    player.pause()
-
-
-def SearchSong():
-    print("searching")
+    CreateApp.main(self)
 
 
 
