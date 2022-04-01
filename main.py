@@ -9,51 +9,66 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPalette, QColor
 from darkstyle import change_style
 
-app = QApplication([])
-app = change_style(app)
 
-window = QWidget()
-window.setFixedHeight(300)
-window.setFixedWidth(300)
+def main():
+    app = QApplication([])
+    app = change_style(app)
 
-layout = QVBoxLayout()
+    window = QWidget()
+    window.setFixedHeight(300)
+    window.setFixedWidth(300)
 
-Search_box = QLineEdit()
-Search_box.move(20, 20)
-Search_box.resize(280, 40)
+    layout = QVBoxLayout()
 
-shuffle_button = QPushButton('Shuffle Play')
-play_button = QPushButton('Play')
-pause_button = QPushButton('Pause')
-volume_up_button = QPushButton('Volume up')
-volume_down_button = QPushButton('Volume down')
+    search_box = QLineEdit()
+    search_box.move(20, 20)
+    search_box.resize(280, 40)
 
-player = QMediaPlayer()
+    shuffle_button = QPushButton('Shuffle Play')
+    play_button = QPushButton('Play')
+    pause_button = QPushButton('Pause')
+    volume_up_button = QPushButton('Volume up')
+    volume_down_button = QPushButton('Volume down')
 
-layout.addWidget(Search_box)
-layout.addWidget(shuffle_button)
-layout.addWidget(play_button)
-layout.addWidget(volume_up_button)
-layout.addWidget(volume_down_button)
-layout.addWidget(pause_button)
+    player = QMediaPlayer()
 
-window.setLayout(layout)
+    layout.addWidget(search_box)
+    layout.addWidget(shuffle_button)
+    layout.addWidget(play_button)
+    layout.addWidget(volume_up_button)
+    layout.addWidget(volume_down_button)
+    layout.addWidget(pause_button)
 
-title_of_song = QLabel()
+    window.setLayout(layout)
+
+    title_of_song = QLabel()
+
+    shuffle_button.clicked.connect(ShufflePlayAudio)
+    play_button.clicked.connect(PlayAudio)
+    pause_button.clicked.connect(PauseAudio)
+    volume_up_button.clicked.connect(VolumeUp)
+    volume_down_button.clicked.connect(VolumeDown)
+    play_button.show()
+    window.show()
+    app.exec()
 
 
-def VolumeUp():
+if __name__ == "__main__":
+    main()
+
+
+def VolumeUp(player):
     current_volume = player.volume()
     player.setVolume(current_volume + 5)
 
 
-def VolumeDown():
+def VolumeDown(player):
     current_volume = player.volume()
     player.setVolume(current_volume - 5)
     print(current_volume)
 
 
-def ShufflePlayAudio():
+def ShufflePlayAudio(player):
     print("Playing random song")
     folder = Path.cwd() / 'music'
     songs = []
@@ -67,11 +82,11 @@ def ShufflePlayAudio():
     player.play()
 
 
-def PlayAudio():
+def PlayAudio(player):
     player.play()
 
 
-def PauseAudio():
+def PauseAudio(player):
     player.pause()
 
 
@@ -79,11 +94,4 @@ def SearchSong():
     print("searching")
 
 
-shuffle_button.clicked.connect(ShufflePlayAudio)
-play_button.clicked.connect(PlayAudio)
-pause_button.clicked.connect(PauseAudio)
-volume_up_button.clicked.connect(VolumeUp)
-volume_down_button.clicked.connect(VolumeDown)
-play_button.show()
-window.show()
-app.exec()
+
