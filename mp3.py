@@ -93,7 +93,7 @@ def main():
 
         print("searching")
 
-    shuffle_button.clicked.connect(Shufflewrapper)
+    shuffle_button.clicked.connect(ShuffleWrapper)
     play_button.clicked.connect(PlayAudio)
     pause_button.clicked.connect(PauseAudio)
     volume_up_button.clicked.connect(VolumeUp)
